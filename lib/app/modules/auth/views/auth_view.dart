@@ -85,7 +85,9 @@ class AuthView extends GetView<AuthController> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: BottomButtonCard(
-                onPressed: () {},
+                onPressed: () {
+                  controller.signUp();
+                },
                 title: 'Sign Up',
                 textStyle: TextStyle(
                   fontSize: 14.sp,

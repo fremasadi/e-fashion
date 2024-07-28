@@ -1,9 +1,9 @@
-import 'package:fashion_ecommerce/app/modules/auth/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../style/app_color.dart';
 import '../../../widgets/cards/BottomButtonCard.dart';
+import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
@@ -37,7 +37,7 @@ class LoginView extends GetView<LoginController> {
               child: Obx(() => Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: controller.emailFocusNode.hasFocus
+                        color: controller.emailFocusNode.value.hasFocus
                             ? Colors.purple
                             : Colors.white,
                       ),
@@ -51,7 +51,7 @@ class LoginView extends GetView<LoginController> {
                                 vertical: 8.0, horizontal: 20),
                             child: TextFormField(
                               controller: controller.controllerEmail,
-                              focusNode: controller.emailFocusNode,
+                              focusNode: controller.emailFocusNode.value,
                               decoration: InputDecoration(
                                 labelText: 'Email',
                                 labelStyle: TextStyle(fontSize: 12.sp),
@@ -78,7 +78,7 @@ class LoginView extends GetView<LoginController> {
               child: Obx(() => Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: controller.passwordFocusNode.hasFocus
+                        color: controller.passwordFocusNode.value.hasFocus
                             ? Colors.purple
                             : Colors.white,
                       ),
@@ -92,7 +92,7 @@ class LoginView extends GetView<LoginController> {
                                 vertical: 8.0, horizontal: 20),
                             child: TextFormField(
                               controller: controller.controllerPassword,
-                              focusNode: controller.passwordFocusNode,
+                              focusNode: controller.passwordFocusNode.value,
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 labelStyle: TextStyle(fontSize: 12.sp),
@@ -150,7 +150,7 @@ class LoginView extends GetView<LoginController> {
                 onPressed: () {
                   controller.login();
                 },
-                title: 'Sign Up',
+                title: 'Login',
                 textStyle: TextStyle(
                   fontSize: 14.sp,
                   fontFamily: 'Metro-Medium',
@@ -162,6 +162,10 @@ class LoginView extends GetView<LoginController> {
                 radiusBorder: 25,
               ),
             ),
+            if (controller.isLoading.value)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
           ],
         ),
       ),

@@ -1,69 +1,63 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+import 'package:fashion_ecommerce/app/routes/app_pages.dart';
+import 'package:fashion_ecommerce/app/style/app_color.dart';
 import 'package:get/get.dart';
-import '../../../data/entities/users.dart';
-import '../../../data/repository/user_repository.dart';
-import '../../../routes/app_pages.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+
+import '../../../../core/helper.dart';
+import '../../../widgets/pop_up_load.dart';
 
 class LoginController extends GetxController {
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
-  final FocusNode emailFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
 
-  final UserRepository userRepository = UserRepository();
-
-  var isFilledEmail = false.obs;
-  var isFilledPassword = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-
-    emailFocusNode.addListener(() {
-      update();
-    });
-
-    passwordFocusNode.addListener(() {
-      update();
-    });
-
-    controllerEmail.addListener(() {
-      isFilledEmail.value = controllerEmail.text.isNotEmpty;
-    });
-
-    controllerPassword.addListener(() {
-      isFilledPassword.value = controllerPassword.text.isNotEmpty;
-    });
-  }
-
-  @override
-  void onClose() {
-    controllerEmail.dispose();
-    controllerPassword.dispose();
-    emailFocusNode.dispose();
-    passwordFocusNode.dispose();
-    super.onClose();
-  }
+  final emailFocusNode = FocusNode().obs;
+  final passwordFocusNode = FocusNode().obs;
+  final isFilledEmail = false.obs;
+  final isFilledPassword = false.obs;
+  final isLoading = false.obs;
 
   Future<void> login() async {
-    try {
-      List<User> users = await userRepository.fetchUsers();
-      String email = controllerEmail.text;
-      String password = controllerPassword.text;
+    Get.dialog(PopUpLoad(children: [
+      Column(
+        children: [
+          CircularProgressIndicator(
+            color: AppColor.primary,
+            strokeWidth: 4,
+          ),
+        ],
+      )
+    ]));
 
-      User? user = users.firstWhereOrNull(
-        (user) => user.email == email && user.password == password,
+    final loginData = jsonEncode(<String, dynamic>{
+      'email': controllerEmail.text,
+      'password': controllerPassword.text,
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: loginData,
       );
 
-      if (user != null) {
-        Get.toNamed(Routes.HOME);
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        Get.snackbar('Success', 'Login successful');
+        // Adding a delay before navigating to the next screen
+        await Future.delayed(const Duration(seconds: 2));
+        Get.toNamed('/base', arguments: responseData);
       } else {
-        // Handle login failure (e.g., show error message)
-        Get.snackbar('Login Failed', 'Invalid email or password');
+        Get.snackbar('Error', 'Failed to login');
       }
     } catch (e) {
-      // Handle error (e.g., show error message)
-      Get.snackbar('Error', e.toString());
+      Get.snackbar('Error', 'Failed to login: $e');
+    } finally {
+      // Dismiss loading dialog
+      Get.back();
     }
   }
 }

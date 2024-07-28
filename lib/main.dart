@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(
-              scaffoldBackgroundColor: Colors.white, fontFamily: 'Metro'),
+              scaffoldBackgroundColor: const Color(0xffF9F9F9),
+              fontFamily: 'Metro'),
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
           debugShowCheckedModeBanner: false,
