@@ -81,18 +81,35 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    Text(
-                      productStatusSale
-                          ? '$discountedPrice\$'
-                          : '$originalPrice\$',
-                      style: TextStyle(
-                        color: productStatusSale ? Colors.red : Colors.black,
-                        fontSize: 16.sp,
-                        fontFamily: 'Metro-Regular',
-                        decoration: productStatusSale
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          productStatusSale
+                              ? '$originalPrice\$'
+                              : '$originalPrice\$',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            fontFamily: 'Metro-Regular',
+                            decoration: productStatusSale
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
+                        if (productStatusSale)
+                          Text(
+                            '$discountedPrice\$',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 16.sp,
+                              fontFamily: 'Metro-Regular',
+                            ),
+                          ),
+                      ],
                     ),
                   ],
                 ),

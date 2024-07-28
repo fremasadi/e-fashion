@@ -106,15 +106,18 @@ class HomeView extends GetView<HomeController> {
                     if (controller.isLoading.value) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
+                      var filteredProducts = controller.products
+                          .where((product) => !product.isOnSale)
+                          .toList();
                       return SizedBox(
                         height: 350.h,
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.all(8.0),
-                          itemCount: controller.products.length,
+                          itemCount: filteredProducts.length,
                           itemBuilder: (context, index) {
-                            var product = controller.products[index];
+                            var product = filteredProducts[index];
                             return ProductCard(
                               productName: product.name,
                               productType: product.type,

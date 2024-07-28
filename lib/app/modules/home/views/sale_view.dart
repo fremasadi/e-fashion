@@ -1,3 +1,4 @@
+import 'package:fashion_ecommerce/app/modules/home/controllers/home_controller.dart';
 import 'package:fashion_ecommerce/app/style/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../widgets/cards/ProductCard.dart';
 
-class SaleView extends GetView {
+class SaleView extends GetView<HomeController> {
   const SaleView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -71,23 +72,37 @@ class SaleView extends GetView {
                 ],
               ),
             ),
-            // SingleChildScrollView(
-            //   scrollDirection: Axis.horizontal,
-            //   child: Row(
-            //     children: List.generate(10, (index) {
-            //       return ProductCard(
-            //         productName: 'Evening Dress',
-            //         productType: 'Dorothy Perkins',
-            //         productImage: 'assets/images/img_item1.png',
-            //         productStatusSale: true,
-            //         originalPrice: '15',
-            //         discountedPrice: '10',
-            //         rating: 4.5,
-            //         reviewCount: 10,
-            //       );
-            //     }),
-            //   ),
-            // ),
+            Obx(() {
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                var filteredProducts = controller.products
+                    .where((product) => product.isOnSale)
+                    .toList();
+                return SizedBox(
+                  height: 350.h,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      var product = filteredProducts[index];
+                      return ProductCard(
+                        productName: product.name,
+                        productType: product.type,
+                        productImage: product.image,
+                        productStatusSale: product.isOnSale,
+                        originalPrice: product.price,
+                        discountedPrice: product.discountedPrice,
+                        rating: product.rating,
+                        reviewCount: product.reviewCount,
+                      );
+                    },
+                  ),
+                );
+              }
+            }),
             Padding(
               padding: EdgeInsets.only(left: 14.0, top: 33.0),
               child: Column(
@@ -123,23 +138,37 @@ class SaleView extends GetView {
                       ],
                     ),
                   ),
-                  // SingleChildScrollView(
-                  //   scrollDirection: Axis.horizontal,
-                  //   child: Row(
-                  //     children: List.generate(10, (index) {
-                  //       return ProductCard(
-                  //         productName: 'Evening Dress',
-                  //         productType: 'Dorothy Perkins',
-                  //         productImage: 'assets/images/img_item1.png',
-                  //         productStatusSale: false,
-                  //         originalPrice: '15',
-                  //         discountedPrice: '0',
-                  //         rating: 4.5,
-                  //         reviewCount: 10,
-                  //       );
-                  //     }),
-                  //   ),
-                  // )
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      var filteredProducts = controller.products
+                          .where((product) => !product.isOnSale)
+                          .toList();
+                      return SizedBox(
+                        height: 350.h,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: filteredProducts.length,
+                          itemBuilder: (context, index) {
+                            var product = filteredProducts[index];
+                            return ProductCard(
+                              productName: product.name,
+                              productType: product.type,
+                              productImage: product.image,
+                              productStatusSale: product.isOnSale,
+                              originalPrice: product.price,
+                              discountedPrice: product.discountedPrice,
+                              rating: product.rating,
+                              reviewCount: product.reviewCount,
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  }),
                 ],
               ),
             )
