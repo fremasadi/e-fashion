@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'package:fashion_ecommerce/app/routes/app_pages.dart';
 import 'package:fashion_ecommerce/app/style/app_color.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
 import '../../../../core/helper.dart';
 import '../../../widgets/pop_up_load.dart';
 

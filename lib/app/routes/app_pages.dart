@@ -7,6 +7,8 @@ import '../modules/bag/bindings/bag_binding.dart';
 import '../modules/bag/views/bag_view.dart';
 import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
+import '../modules/detail_produk/bindings/detail_produk_binding.dart';
+import '../modules/detail_produk/views/detail_produk_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -63,6 +65,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_PRODUK,
+      page: () => const DetailProdukView(),
+      binding: DetailProdukBinding(),
     ),
   ];
 }

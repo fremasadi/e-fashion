@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../widgets/cards/ProductCard.dart';
+import '../../../widgets/cards/VerticalProductCard.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -112,18 +112,24 @@ class HomeView extends GetView<HomeController> {
                       return SizedBox(
                         height: 350.h,
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
+                        child: GridView.builder(
                           scrollDirection: Axis.horizontal,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 20.0.h,
+                            childAspectRatio: 2, // Rasio aspek anak grid
+                          ),
                           padding: const EdgeInsets.all(8.0),
                           itemCount: filteredProducts.length,
                           itemBuilder: (context, index) {
                             var product = filteredProducts[index];
-                            return ProductCard(
+                            return VerticalProductCard(
                               productName: product.name,
                               productType: product.type,
                               productImage: product.image,
                               productStatusSale: product.isOnSale,
-                              originalPrice: product.price,
+                              originalPrice: product.originalPrice,
                               discountedPrice: product.discountedPrice,
                               rating: product.rating,
                               reviewCount: product.reviewCount,

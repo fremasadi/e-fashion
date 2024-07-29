@@ -1,10 +1,7 @@
-// widgets/product_card.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
-class ProductCard extends StatelessWidget {
+class VerticalProductCard extends StatelessWidget {
   final String productName;
   final String productType;
   final String productImage;
@@ -14,8 +11,8 @@ class ProductCard extends StatelessWidget {
   final double rating;
   final int reviewCount;
 
-  const ProductCard({
-    Key? key,
+  const VerticalProductCard({
+    super.key,
     required this.productName,
     required this.productType,
     required this.productImage,
@@ -24,13 +21,11 @@ class ProductCard extends StatelessWidget {
     required this.discountedPrice,
     required this.rating,
     required this.reviewCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150.w,
-      margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -44,8 +39,8 @@ class ProductCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.asset(
                   productImage,
-                  height: 184.h,
-                  width: context.width,
+                  height: 162.h,
+                  width: double.infinity,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -86,8 +81,8 @@ class ProductCard extends StatelessWidget {
                       children: [
                         Text(
                           productStatusSale
-                              ? '$originalPrice\$'
-                              : '$originalPrice\$',
+                              ? '\$$originalPrice'
+                              : '\$$originalPrice',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.sp,
@@ -97,12 +92,10 @@ class ProductCard extends StatelessWidget {
                                 : TextDecoration.none,
                           ),
                         ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
+                        SizedBox(width: 4.w),
                         if (productStatusSale)
                           Text(
-                            '$discountedPrice\$',
+                            '\$$discountedPrice',
                             style: TextStyle(
                               color: Colors.red,
                               fontSize: 16.sp,
@@ -140,7 +133,8 @@ class ProductCard extends StatelessWidget {
             top: 0.0,
             right: 0.0,
             child: Padding(
-              padding: const EdgeInsets.only(top: 166.0),
+              padding: const EdgeInsets.only(top: 150.0),
+              // Adjusted for new height
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 26,

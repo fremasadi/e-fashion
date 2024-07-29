@@ -5,10 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import '../../../widgets/cards/ProductCard.dart';
+import '../../../widgets/cards/VerticalProductCard.dart';
 
 class SaleView extends GetView<HomeController> {
   const SaleView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,12 +89,12 @@ class SaleView extends GetView<HomeController> {
                     itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
                       var product = filteredProducts[index];
-                      return ProductCard(
+                      return VerticalProductCard(
                         productName: product.name,
                         productType: product.type,
                         productImage: product.image,
                         productStatusSale: product.isOnSale,
-                        originalPrice: product.price,
+                        originalPrice: product.originalPrice,
                         discountedPrice: product.discountedPrice,
                         rating: product.rating,
                         reviewCount: product.reviewCount,
@@ -154,12 +155,12 @@ class SaleView extends GetView<HomeController> {
                           itemCount: filteredProducts.length,
                           itemBuilder: (context, index) {
                             var product = filteredProducts[index];
-                            return ProductCard(
+                            return VerticalProductCard(
                               productName: product.name,
                               productType: product.type,
                               productImage: product.image,
                               productStatusSale: product.isOnSale,
-                              originalPrice: product.price,
+                              originalPrice: product.originalPrice,
                               discountedPrice: product.discountedPrice,
                               rating: product.rating,
                               reviewCount: product.reviewCount,

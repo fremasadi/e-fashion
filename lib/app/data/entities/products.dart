@@ -3,8 +3,7 @@ class Product {
   String name;
   String type;
   String image;
-  double price;
-  double originalPrice; // Tambahkan properti ini
+  double originalPrice;
   double discountedPrice;
   double rating;
   int reviewCount;
@@ -15,7 +14,6 @@ class Product {
     required this.name,
     required this.type,
     required this.image,
-    required this.price,
     required this.originalPrice,
     required this.discountedPrice,
     required this.rating,
@@ -29,9 +27,7 @@ class Product {
       name: json['name'],
       type: json['type'],
       image: json['image'],
-      price: (json['price'] as num).toDouble(),
-      originalPrice:
-          (json['original_price'] as num).toDouble(), // Tambahkan properti ini
+      originalPrice: (json['original_price'] as num).toDouble(),
       discountedPrice: (json['discounted_price'] as num).toDouble(),
       rating: (json['rating'] as num).toDouble(),
       reviewCount: json['review_count'],

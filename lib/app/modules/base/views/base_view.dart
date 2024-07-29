@@ -24,6 +24,7 @@ class BaseView extends GetView<BaseController> {
     ];
 
     return Scaffold(
+      appBar: null,
       body: Obx(() => widgetOptions.elementAt(controller.selectedIndex.value)),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

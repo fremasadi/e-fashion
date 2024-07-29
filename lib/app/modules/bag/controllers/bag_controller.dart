@@ -1,23 +1,32 @@
+import 'dart:convert';
+
+import 'package:fashion_ecommerce/core/helper.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../data/entities/OrderDetail.dart';
+import '../../../data/entities/products.dart';
 
 class BagController extends GetxController {
-  //TODO: Implement BagController
+  Future<List<Product>> fetchProducts() async {
+    final response = await http.get(Uri.parse('$baseUrl/products'));
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Product.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load products');
+    }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  Future<List<OrderDetail>> fetchOrderDetails() async {
+    final response = await http.get(Uri.parse('$baseUrl/order_details'));
 
-  @override
-  void onClose() {
-    super.onClose();
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => OrderDetail.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load order details');
+    }
   }
-
-  void increment() => count.value++;
 }
