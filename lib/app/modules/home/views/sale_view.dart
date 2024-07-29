@@ -83,8 +83,13 @@ class SaleView extends GetView<HomeController> {
                 return SizedBox(
                   height: 350.h,
                   width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
+                  child: GridView.builder(
                     scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      mainAxisSpacing: 20.0.h,
+                      childAspectRatio: 2, // Rasio aspek anak grid
+                    ),
                     padding: const EdgeInsets.all(8.0),
                     itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
@@ -149,8 +154,14 @@ class SaleView extends GetView<HomeController> {
                       return SizedBox(
                         height: 350.h,
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
+                        child: GridView.builder(
                           scrollDirection: Axis.horizontal,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 20.0.h,
+                            childAspectRatio: 2, // Rasio aspek anak grid
+                          ),
                           padding: const EdgeInsets.all(8.0),
                           itemCount: filteredProducts.length,
                           itemBuilder: (context, index) {
