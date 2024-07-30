@@ -98,11 +98,10 @@ class ShopView extends GetView<ShopController> {
                 return controller.isHorizontalView.value
                     ? GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1, // 1 item per row for list view
+                          crossAxisCount: 1,
                           crossAxisSpacing: 8.0.w,
                           mainAxisSpacing: 20.0.h,
-                          childAspectRatio:
-                              3.0, // Adjust as needed for horizontal card
+                          childAspectRatio: 3.0,
                         ),
                         padding: const EdgeInsets.all(8.0),
                         itemCount: products.length,
@@ -128,7 +127,7 @@ class ShopView extends GetView<ShopController> {
                       )
                     : GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 2 items per row for grid view
+                          crossAxisCount: 2,
                           crossAxisSpacing: 8.0.w,
                           mainAxisSpacing: 20.0.h,
                           childAspectRatio:

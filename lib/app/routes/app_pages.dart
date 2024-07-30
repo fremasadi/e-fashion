@@ -13,6 +13,8 @@ import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/order_history/bindings/order_history_binding.dart';
+import '../modules/order_history/views/order_history_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/shop/bindings/shop_binding.dart';
@@ -70,6 +72,11 @@ class AppPages {
       name: _Paths.DETAIL_PRODUK,
       page: () => const DetailProdukView(),
       binding: DetailProdukBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER_HISTORY,
+      page: () => const OrderHistoryView(),
+      binding: OrderHistoryBinding(),
     ),
   ];
 }

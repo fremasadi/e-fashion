@@ -26,7 +26,6 @@ class OrderDetail {
       productId: json['product_id'] ?? 0,
       quantity: json['quantity'] ?? 0,
       price: (json['price'] as num).toDouble(),
-      // Ensure price is a double
       size: json['size'] ?? '',
       color: json['color'] ?? '',
       createdAt: DateTime.parse(

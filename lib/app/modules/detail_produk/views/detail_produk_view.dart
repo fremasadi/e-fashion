@@ -65,6 +65,7 @@ class DetailProdukView extends GetView<DetailProdukController> {
                         },
                         icon: Icons.arrow_drop_down_sharp,
                         width: 138.w,
+                        borderColor: AppColor.grey,
                       )),
                   Obx(() => HorizontalCard(
                         title: controller.selectedColorName.value.isEmpty
@@ -74,11 +75,12 @@ class DetailProdukView extends GetView<DetailProdukController> {
                           controller.showBottomDialogColor();
                         },
                         icon: Icons.arrow_drop_down_sharp,
+                        borderColor: AppColor.grey,
                         width: 138.w,
                       )),
                   Container(
-                    height: 30,
-                    width: 30,
+                    height: 30.h,
+                    width: 30.w,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.white,
@@ -177,7 +179,10 @@ class DetailProdukView extends GetView<DetailProdukController> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: BottomButtonCard(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.addToCart(
+                            product.id, product.originalPrice, 1);
+                      },
                       title: 'ADD TO CART',
                       textStyle: TextStyle(
                         fontSize: 14.sp,

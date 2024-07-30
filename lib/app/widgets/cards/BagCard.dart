@@ -1,93 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../data/entities/OrderDetail.dart';
 import '../../data/entities/products.dart';
 
-class BagCard extends StatelessWidget {
+class BagCard extends StatefulWidget {
   final OrderDetail orderDetail;
   final Product product;
+  final Function(OrderDetail) onUpdateQuantity;
 
   const BagCard({
     super.key,
     required this.orderDetail,
     required this.product,
+    required this.onUpdateQuantity,
   });
+
+  @override
+  _BagCardState createState() => _BagCardState();
+}
+
+class _BagCardState extends State<BagCard> {
+  late int _quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    _quantity = widget.orderDetail.quantity;
+  }
+
+  void _increaseQuantity() {
+    setState(() {
+      _quantity++;
+    });
+    widget.orderDetail.quantity = _quantity;
+    widget.onUpdateQuantity(widget.orderDetail);
+  }
+
+  void _decreaseQuantity() {
+    if (_quantity > 1) {
+      setState(() {
+        _quantity--;
+      });
+      widget.orderDetail.quantity = _quantity;
+      widget.onUpdateQuantity(widget.orderDetail);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 104.h,
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               Image.asset(
-                product.image, // Use the image URL from the product
+                widget.product.image,
                 width: 104.w,
                 height: 104.h,
                 fit: BoxFit.fill,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name, // Use the product name
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: 'Metro-SemiBold',
+              SizedBox(width: 12.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.product.name,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontFamily: 'Metro-SemiBold',
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Row(
+                    children: [
+                      Text('Color: ${widget.orderDetail.color}'),
+                      SizedBox(width: 11.w),
+                      Text('Size: ${widget.orderDetail.size}'),
+                    ],
+                  ),
+                  SizedBox(height: 14.h),
+                  Row(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
+                        child: IconButton(
+                          onPressed: _decreaseQuantity,
+                          icon: const Icon(Icons.remove),
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Text('Color: ${orderDetail.color}'),
-                        SizedBox(width: 11.w),
-                        Text('Size: ${orderDetail.size}'),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 14.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.blue,
-                            ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.remove),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              '${orderDetail.quantity}',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontFamily: 'Metro-Medium',
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.blue,
-                            ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.add),
-                            ),
-                          ),
-                        ],
+                      SizedBox(width: 8.w),
+                      Text(
+                        '$_quantity',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: 'Metro-Medium',
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      SizedBox(width: 8.w),
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
+                        child: IconButton(
+                          onPressed: _increaseQuantity,
+                          icon: const Icon(Icons.add),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -101,7 +128,7 @@ class BagCard extends StatelessWidget {
                   icon: const Icon(Icons.more_vert),
                 ),
                 Text(
-                  '\$${(orderDetail.quantity * product.originalPrice).toStringAsFixed(2)}', // Ensure double formatting
+                  '\$${(_quantity * widget.product.originalPrice).toStringAsFixed(2)}',
                 ),
               ],
             ),

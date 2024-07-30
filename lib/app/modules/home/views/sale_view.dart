@@ -2,13 +2,11 @@ import 'package:fashion_ecommerce/app/modules/home/controllers/home_controller.d
 import 'package:fashion_ecommerce/app/style/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
-
 import '../../../widgets/cards/VerticalProductCard.dart';
 
 class SaleView extends GetView<HomeController> {
-  const SaleView({Key? key}) : super(key: key);
+  const SaleView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +86,7 @@ class SaleView extends GetView<HomeController> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
                       mainAxisSpacing: 20.0.h,
-                      childAspectRatio: 2, // Rasio aspek anak grid
+                      childAspectRatio: 2,
                     ),
                     padding: const EdgeInsets.all(8.0),
                     itemCount: filteredProducts.length,
@@ -110,7 +108,7 @@ class SaleView extends GetView<HomeController> {
               }
             }),
             Padding(
-              padding: EdgeInsets.only(left: 14.0, top: 33.0),
+              padding: EdgeInsets.only(left: 14.0, top: 0.0),
               child: Column(
                 children: [
                   Padding(

@@ -1,3 +1,4 @@
+import 'package:fashion_ecommerce/app/modules/auth/controllers/login_controller.dart';
 import 'package:fashion_ecommerce/app/modules/bag/controllers/bag_controller.dart';
 import 'package:fashion_ecommerce/app/modules/shop/controllers/shop_controller.dart';
 import 'package:get/get.dart';
@@ -12,5 +13,6 @@ class BaseBinding extends Bindings {
     Get.put(HomeController());
     Get.put(ShopController());
     Get.put(BagController());
+    Get.put(LoginController());
   }
 }

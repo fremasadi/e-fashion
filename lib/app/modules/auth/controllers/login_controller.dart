@@ -16,7 +16,14 @@ class LoginController extends GetxController {
   final isFilledPassword = false.obs;
   final isLoading = false.obs;
 
+  final userId = ''.obs;
+
   Future<void> login() async {
+    if (controllerEmail.text.isEmpty || controllerPassword.text.isEmpty) {
+      Get.snackbar('Error', 'Email and Password cannot be empty');
+      return;
+    }
+
     Get.dialog(PopUpLoad(children: [
       Column(
         children: [
@@ -34,6 +41,8 @@ class LoginController extends GetxController {
     });
 
     try {
+      final startTime = DateTime.now();
+
       final response = await http.post(
         Uri.parse('$baseUrl/login'),
         headers: <String, String>{
@@ -42,20 +51,34 @@ class LoginController extends GetxController {
         body: loginData,
       );
 
+      final endTime = DateTime.now();
+      final duration = endTime.difference(startTime);
+      print('Login API call took: ${duration.inMilliseconds}ms');
+
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        Get.snackbar('Success', 'Login successful');
-        // Adding a delay before navigating to the next screen
-        await Future.delayed(const Duration(seconds: 2));
-        Get.toNamed('/base', arguments: responseData);
+        print('Response data: $responseData'); // Log response data
+        if (responseData.containsKey('id')) {
+          // Change userId to id
+          userId.value = responseData['id'].toString(); // Store user ID
+          Get.snackbar('Success', 'Login successful');
+          await Future.delayed(const Duration(seconds: 2));
+          Get.offNamed('/base', arguments: responseData);
+        } else {
+          Get.snackbar('Error', 'Invalid response data: id not found');
+        }
       } else {
-        Get.snackbar('Error', 'Failed to login');
+        final errorData = jsonDecode(response.body);
+        Get.snackbar('Error', errorData['message'] ?? 'Failed to login');
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to login: $e');
+      print('Exception: $e'); // Log exception
     } finally {
       // Dismiss loading dialog
-      Get.back();
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
     }
   }
 }
