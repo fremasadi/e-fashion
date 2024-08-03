@@ -17,7 +17,7 @@ class HorizontalCard extends StatelessWidget {
   final VoidCallback onPressed;
   final double width;
   final IconData? icon;
-  final Color? borderColor; // Optional border color
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,7 @@ class HorizontalCard extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: borderColor != null
-              ? Border.all(color: borderColor!)
-              : null, // Apply border if color is provided
+          border: borderColor != null ? Border.all(color: borderColor!) : null,
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 12, right: 8.0),

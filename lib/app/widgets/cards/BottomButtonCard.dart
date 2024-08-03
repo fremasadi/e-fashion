@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BottomButtonCard extends StatelessWidget {
   const BottomButtonCard(
@@ -21,20 +22,19 @@ class BottomButtonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        height: heightContainer,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: Border.all(color: borderColor ?? Colors.transparent),
-          borderRadius: BorderRadius.circular(radiusBorder),
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: textStyle,
-          ),
+    return Container(
+      height: heightContainer,
+      width: context.width,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        border: Border.all(color: borderColor ?? Colors.transparent),
+        borderRadius: BorderRadius.circular(radiusBorder),
+      ),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          title,
+          style: textStyle,
         ),
       ),
     );

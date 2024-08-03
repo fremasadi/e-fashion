@@ -7,6 +7,8 @@ import '../modules/bag/bindings/bag_binding.dart';
 import '../modules/bag/views/bag_view.dart';
 import '../modules/base/bindings/base_binding.dart';
 import '../modules/base/views/base_view.dart';
+import '../modules/checkout/bindings/checkout_binding.dart';
+import '../modules/checkout/views/checkout_view.dart';
 import '../modules/detail_produk/bindings/detail_produk_binding.dart';
 import '../modules/detail_produk/views/detail_produk_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
@@ -77,6 +79,11 @@ class AppPages {
       name: _Paths.ORDER_HISTORY,
       page: () => const OrderHistoryView(),
       binding: OrderHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHECKOUT,
+      page: () => const CheckoutView(),
+      binding: CheckoutBinding(),
     ),
   ];
 }

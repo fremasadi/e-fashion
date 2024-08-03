@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:fashion_ecommerce/core/helper.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +9,7 @@ import '../../auth/controllers/login_controller.dart';
 class BagController extends GetxController {
   final LoginController loginController = Get.find<LoginController>();
   var orderDetails = <OrderDetail>[].obs;
+  var products = <Product>[].obs;
 
   Future<List<Product>> fetchProducts() async {
     final response = await http.get(Uri.parse('$baseUrl/products'));
@@ -39,6 +39,11 @@ class BagController extends GetxController {
     } else {
       throw Exception('Failed to load order details');
     }
+  }
+
+  void refreshData() {
+    fetchOrderDetails();
+    fetchProducts();
   }
 
   void increaseQuantity(OrderDetail orderDetail) {
